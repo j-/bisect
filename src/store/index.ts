@@ -1,6 +1,11 @@
 import { Reducer } from 'redux';
 
 import {
+	getMinimumSteps as calculateMinimumSteps,
+	getMaximumSteps as calculateMaximumSteps,
+} from '../calculations';
+
+import {
 	isActionSetItems,
 } from './actions';
 
@@ -35,9 +40,9 @@ export const countItems = (state: RootReducerState) => (
 );
 
 export const getMinimumSteps = (state: RootReducerState) => (
-	Math.floor(Math.log2(countItems(state)))
+	calculateMinimumSteps(countItems(state))
 );
 
 export const getMaximumSteps = (state: RootReducerState) => (
-	Math.ceil(Math.log2(countItems(state)))
+	calculateMaximumSteps(countItems(state))
 );
