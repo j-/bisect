@@ -2,6 +2,7 @@ import {
 	getMinimumSteps,
 	getMaximumSteps,
 	getParentSegmentId,
+	getSegmentId,
 } from './calculations';
 
 describe('getMinimumSteps()', () => {
@@ -85,5 +86,15 @@ describe('getParentSegmentId()', () => {
 	});
 	it('handles 100', () => {
 		expect(getParentSegmentId(100)).toBe(49);
+	});
+});
+
+describe('getSegmentId()', () => {
+	it('handles example scenario', () => {
+		expect(getSegmentId(24, 49, 4)).toBe(21);
+		expect(getSegmentId(25, 49, 4)).toBe(22);
+		expect(getSegmentId(26, 49, 4)).toBe(22);
+		expect(getSegmentId(27, 49, 4)).toBe(22);
+		expect(getSegmentId(28, 49, 4)).toBe(23);
 	});
 });
