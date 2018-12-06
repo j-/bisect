@@ -25,3 +25,7 @@ const reducer: Reducer<RootReducerState> = (state = DEFAULT_STATE, action) => {
 };
 
 export default reducer;
+
+export const getItems = (state: RootReducerState) => (
+	state.items
+);
