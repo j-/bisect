@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ItemTableBodyRow from './ItemTableBodyRow';
 
 export interface Props {
 	items: string[];
@@ -11,9 +12,12 @@ const ItemTableBody: React.FunctionComponent<Props> = ({
 }) => (
 	<tbody className="ItemTableBody">
 		{items.map((item, i) => (
-			<tr key={i} className="ItemTableBody-item-row">
-				<td>{item}</td>
-			</tr>
+			<ItemTableBodyRow
+				key={i}
+				item={item}
+				index={i}
+				steps={steps}
+			/>
 		))}
 	</tbody>
 );
