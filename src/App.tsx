@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const App: React.StatelessComponent = () => (
+const App: React.FunctionComponent = () => (
 	<div className="App">
 		{null}
 	</div>
