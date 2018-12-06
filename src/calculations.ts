@@ -30,11 +30,18 @@ export const getSegmentStep = (segmentId: number) => (
 );
 
 /**
+ * Returns the number of segments in this step.
+ */
+export const getStepSegmentCount = (step: number) => (
+	2 ** step
+);
+
+/**
  * Given the `index` of the item in question, the `count` of all items, and the
  * `step` of interest, will return the index of the segment within this step.
  */
 export const getStepSegment = (index: number, count: number, step: number) => (
-	Math.floor(index / (count / 2 ** step))
+	Math.floor(index / (count / getStepSegmentCount(step)))
 );
 
 /**
@@ -45,5 +52,15 @@ export const getSegmentId = (index: number, count: number, step: number) => (
 	// This segment's index within this step
 	getStepSegment(index, count, step) +
 	// Count of all prior segments
-	Math.max(0, 2 ** step - 2)
+	Math.max(0, getStepSegmentCount(step) - 2)
 );
+
+/**
+ * Gets the index for the item at the beginning of this segment.
+ */
+export const getSegmentMinimumIndex = (segmentId: number, count: number) => {
+	const step = getSegmentStep(segmentId);
+	const segments = getStepSegmentCount(step);
+	const n = (segmentId + 2) % segments;
+	return Math.ceil(n / segments * count);
+};

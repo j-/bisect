@@ -3,6 +3,7 @@ import {
 	getMaximumSteps,
 	getParentSegmentId,
 	getSegmentId,
+	getSegmentMinimumIndex,
 	getSegmentStep,
 } from './calculations';
 
@@ -130,5 +131,22 @@ describe('getSegmentId()', () => {
 		expect(getSegmentId(26, 49, 4)).toBe(22);
 		expect(getSegmentId(27, 49, 4)).toBe(22);
 		expect(getSegmentId(28, 49, 4)).toBe(23);
+	});
+});
+
+describe('getSegmentMinimumIndex()', () => {
+	it('handles example scenario', () => {
+		expect(getSegmentMinimumIndex(0, 7)).toBe(0);
+		expect(getSegmentMinimumIndex(1, 7)).toBe(4);
+		expect(getSegmentMinimumIndex(2, 7)).toBe(0);
+		expect(getSegmentMinimumIndex(3, 7)).toBe(2);
+		expect(getSegmentMinimumIndex(4, 7)).toBe(4);
+		expect(getSegmentMinimumIndex(5, 7)).toBe(6);
+		expect(getSegmentMinimumIndex(6, 7)).toBe(0);
+		expect(getSegmentMinimumIndex(7, 7)).toBe(1);
+		expect(getSegmentMinimumIndex(8, 7)).toBe(2);
+		expect(getSegmentMinimumIndex(9, 7)).toBe(3);
+		expect(getSegmentMinimumIndex(10, 7)).toBe(4);
+		expect(getSegmentMinimumIndex(11, 7)).toBe(5);
 	});
 });
