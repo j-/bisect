@@ -29,3 +29,15 @@ export default reducer;
 export const getItems = (state: RootReducerState) => (
 	state.items
 );
+
+export const countItems = (state: RootReducerState) => (
+	getItems(state).length
+);
+
+export const getMinimumSteps = (state: RootReducerState) => (
+	Math.floor(Math.log2(countItems(state)))
+);
+
+export const getMaximumSteps = (state: RootReducerState) => (
+	Math.ceil(Math.log2(countItems(state)))
+);
