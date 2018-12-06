@@ -23,6 +23,13 @@ export const getParentSegmentId = (segmentId: number) => (
 );
 
 /**
+ * Given a `segmentId`, will return the number of steps to get to that segment.
+ */
+export const getSegmentStep = (segmentId: number) => (
+	Math.floor(Math.log2(segmentId + 2))
+);
+
+/**
  * Given the `index` of the item in question, the `count` of all items, and the
  * `step` of interest, will return the index of the segment within this step.
  */
