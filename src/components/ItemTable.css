@@ -1,0 +1,9 @@
+.ItemTable {
+	border-collapse: collapse;
+}
+
+.ItemTable td,
+.ItemTable th {
+	border: 1px solid #ccc;
+	padding: 0.25em;
+}

@@ -16,6 +16,7 @@ const ItemTableBody: React.FunctionComponent<Props> = ({
 				key={i}
 				item={item}
 				index={i}
+				count={items.length}
 				steps={steps}
 			/>
 		))}

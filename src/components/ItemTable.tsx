@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ItemTableHead from './ItemTableHead';
 import ItemTableBody from './ItemTableBody';
+import './ItemTable.css';
 
 export interface Props {
 	items: string[];
