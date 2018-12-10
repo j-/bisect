@@ -1,22 +1,9 @@
 import * as React from 'react';
-import ItemTable from './ItemTable';
-
-const items = [
-	'Red',
-	'Orange',
-	'Yellow',
-	'Green',
-	'Blue',
-	'Indigo',
-	'Violet',
-];
+import ItemTable from '../containers/ItemTable';
 
 const App: React.FunctionComponent = () => (
 	<div className="App">
-		<ItemTable
-			items={items}
-			steps={3}
-		/>
+		<ItemTable />
 	</div>
 );
 

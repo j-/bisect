@@ -7,8 +7,21 @@ import { Provider as StoreProvider } from 'react-redux';
 import App from './components/App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import { setItems } from './store/actions';
 
 const store = createStore(rootReducer, composeWithDevTools());
+
+store.dispatch(
+	setItems([
+		'Red',
+		'Orange',
+		'Yellow',
+		'Green',
+		'Blue',
+		'Indigo',
+		'Violet',
+	])
+);
 
 ReactDOM.render(
 	<StoreProvider store={store}>
