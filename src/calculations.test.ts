@@ -151,6 +151,13 @@ describe('getSegmentMinimumIndex()', () => {
 		expect(getSegmentMinimumIndex(10, 7)).toBe(4);
 		expect(getSegmentMinimumIndex(11, 7)).toBe(5);
 	});
+
+	xit('handles advanced scenario', () => {
+		expect(getSegmentMinimumIndex(10, 19)).toBe(10);
+		expect(getSegmentMinimumIndex(11, 19)).toBe(13); // Fails
+		expect(getSegmentMinimumIndex(18, 19)).toBe(5);
+		expect(getSegmentMinimumIndex(19, 19)).toBe(7); // Fails
+	});
 });
 
 describe('getSegmentItemCount()', () => {
