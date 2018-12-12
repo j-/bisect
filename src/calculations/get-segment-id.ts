@@ -7,21 +7,30 @@ import { getStepSegmentCount } from './get-step-segment-count';
  *
  * @example
  *
- *     ┌           ┌─────┬─────┐
- *     │  Index 0  │     │  2  │
- *     ├           │  0  ├─────┤
- *     │  Index 1  │     │  3  │
- *     ├           ├─────┼─────┤
- *     │  Index 2  │     │ (4) │
- *     ├           │ (1) ├─────┤
- *     │  Index 3  │     │  5  │
- *     └           └─────┴─────┘
+ *     ┌           ┌─────┬─────┬─────┐
+ *     │  Index 0  │     │     │  6  │
+ *     ├           │     │  2  ├─────┤
+ *     │  Index 1  │     │     │  7  │
+ *     ├           │ (0) ├─────┼─────┤
+ *     │  Index 2  │▒▒▒▒▒│▒▒▒▒▒│▒(8)▒│
+ *     ├           │     │ (3) ├─────┤
+ *     │  Index 3  │     │     │  9  │
+ *     ├           ├─────┼─────┼─────┤
+ *     │  Index 4  │     │     │ 10  │
+ *     ├           │     │  4  ├─────┤
+ *     │  Index 5  │     │     │ 11  │
+ *     ├           │  1  ├─────┼─────┤
+ *     │  Index 6  │     │     │ 12  │
+ *     ├           │     │  5  ├─────┤
+ *     │  Index 7  │     │     │ 13  │
+ *     └           └─────┴─────┴─────┘
  *
  *     const index = 2;
- *     const count = 4;
+ *     const count = 8;
  *
- *     getSegmentId(index, count, 1) === 1
- *     getSegmentId(index, count, 2) === 4
+ *     getSegmentId(index, count, 1) === 0
+ *     getSegmentId(index, count, 2) === 3
+ *     getSegmentId(index, count, 3) === 8
  *
  */
 export const getSegmentId = (index: number, count: number, step: number): number => (
