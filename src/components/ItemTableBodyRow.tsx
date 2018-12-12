@@ -1,9 +1,6 @@
 import * as React from 'react';
-
-import {
-	getSegmentId,
-	getSegmentDimensions,
-} from '../calculations';
+import { getSegmentId } from '../calculations/get-segment-id';
+import { getSegmentDimensions } from '../calculations/get-segment-dimensions';
 
 export interface Props {
 	item: string;

@@ -2,8 +2,11 @@ import { Reducer } from 'redux';
 
 import {
 	getMinimumSteps as calculateMinimumSteps,
+} from '../calculations/get-minimum-steps';
+
+import {
 	getMaximumSteps as calculateMaximumSteps,
-} from '../calculations';
+} from '../calculations/get-maximum-steps';
 
 import {
 	isActionSetItems,
