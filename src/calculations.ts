@@ -16,7 +16,7 @@
  *     getMinimumSteps(count) === 1
  *
  */
-export const getMinimumSteps = (count: number) => (
+export const getMinimumSteps = (count: number): number => (
 	Math.max(Math.floor(Math.log2(count)), 0)
 );
 
@@ -38,7 +38,7 @@ export const getMinimumSteps = (count: number) => (
  *     getMaximumSteps(count) === 2
  *
  */
-export const getMaximumSteps = (count: number) => (
+export const getMaximumSteps = (count: number): number => (
 	Math.max(Math.ceil(Math.log2(count)), 0)
 );
 
@@ -64,7 +64,7 @@ export const getMaximumSteps = (count: number) => (
  *     getParentSegmentId(segmentId) === 2
  *
  */
-export const getParentSegmentId = (segmentId: number) => (
+export const getParentSegmentId = (segmentId: number): number | null => (
 	// Segments 0 and 1 have no parents
 	segmentId < 2 ? null :
 	// All other segments are step 2 or above
@@ -93,7 +93,7 @@ export const getParentSegmentId = (segmentId: number) => (
  *     getSegmentStep(segmentId) === 3
  *
  */
-export const getSegmentStep = (segmentId: number) => (
+export const getSegmentStep = (segmentId: number): number => (
 	Math.floor(Math.log2(segmentId + 2))
 );
 
@@ -116,7 +116,7 @@ export const getSegmentStep = (segmentId: number) => (
  *     getStepSegmentCount(2) === 4
  *
  */
-export const getStepSegmentCount = (step: number) => (
+export const getStepSegmentCount = (step: number): number => (
 	2 ** step
 );
 
@@ -143,7 +143,7 @@ export const getStepSegmentCount = (step: number) => (
  *     getSegmentId(index, count, 2) === 2
  *
  */
-export const getStepSegment = (index: number, count: number, step: number) => (
+export const getStepSegment = (index: number, count: number, step: number): number => (
 	Math.floor(index / (count / getStepSegmentCount(step)))
 );
 
@@ -170,12 +170,80 @@ export const getStepSegment = (index: number, count: number, step: number) => (
  *     getSegmentId(index, count, 2) === 4
  *
  */
-export const getSegmentId = (index: number, count: number, step: number) => (
+export const getSegmentId = (index: number, count: number, step: number): number => (
 	// This segment's index within this step
 	getStepSegment(index, count, step) +
 	// Count of all prior segments
 	Math.max(0, getStepSegmentCount(step) - 2)
 );
+
+/**
+ * Finds the item that is half-way between the two given indexes.
+ *
+ * @example
+ *
+ *     ┌─────┬─────┬─────┬─────┬─────┐
+ *     │ (0) │  0  │  0  │  0  │  0  │
+ *     ├─────┼─────┼─────┼─────┼─────┤
+ *     │  1  │ (1) │ (1) │  1  │  1  │
+ *     ├─────┼─────┼─────┼─────┼─────┤
+ *     │     │  2  │  2  │ (2) │ (2) │
+ *     ├╌╌╌╌╌┼─────┼─────┼─────┼─────┤
+ *     │     ┆     │  3  │  3  │  3  │
+ *     ├╌╌╌╌╌┼╌╌╌╌╌┼─────┼─────┼─────┤
+ *     │     ┆     ┆     │  4  │  4  │
+ *     ├╌╌╌╌╌┼╌╌╌╌╌┼╌╌╌╌╌┼─────┼─────┤
+ *     │     ┆     ┆     ┆     │  5  │
+ *     └╌╌╌╌╌┴╌╌╌╌╌┴╌╌╌╌╌┴╌╌╌╌╌┴─────┘
+ */
+export const getPivotIndex = (minIndex: number, maxIndex: number): number => (
+	minIndex + Math.floor((maxIndex - minIndex) / 2)
+);
+
+/**
+ * For any `segmentId` and `count`, returns a triple containing the index of the
+ * first and last items therein as well as the total number of items therein.
+ *
+ * @example
+ *
+ *     ┌           ┌─────┬─────┬─────┐
+ *     │  Index 0  │     │     │  6  │
+ *     ├           │     │  2  ├─────┤
+ *     │  Index 1  │  0  │     │  7  │
+ *     ├           │     ├─────├─────┘
+ *     │  Index 2  │     │  3  │
+ *     ├           ├─────┼─────┤
+ *     │  Index 3  │     │  4  │
+ *     ├           │  1  ├─────┤
+ *     │  Index 4  │     │  5  │
+ *     └           └─────┴─────┘
+ *
+ *     const count = 5;
+ *
+ *     getSegmentDimensions(0, count) === [0, 2, 3]
+ *     getSegmentDimensions(1, count) === [3, 4, 2]
+ *     getSegmentDimensions(2, count) === [0, 1, 2]
+ *
+ */
+export const getSegmentDimensions = (segmentId: number | null, count: number): [number, number, number] => {
+	if (segmentId === null) {
+		return [0, count - 1, count];
+	}
+	const parentId = getParentSegmentId(segmentId);
+	const [parentMin, parentMax] = getSegmentDimensions(parentId, count);
+	const isFirst = (
+		// Segment has no parent if it's in the first step
+		parentId === null ?
+			// If this is the first step, segment 0 comes first
+			segmentId === 0 :
+			// Otherwise, figure out if this step is first
+			segmentId === 2 * parentId + 2
+	);
+	const indexPivot = getPivotIndex(parentMin, parentMax);
+	const indexMin = isFirst ? parentMin : indexPivot + 1;
+	const indexMax = isFirst ? indexPivot : parentMax;
+	return [indexMin, indexMax, indexMax - indexMin + 1];
+};
 
 /**
  * Gets the index for the item at the beginning of this segment.
@@ -198,12 +266,9 @@ export const getSegmentId = (index: number, count: number, step: number) => (
  *     getSegmentMinimumIndex(segmentId, count) === 2
  *
  */
-export const getSegmentMinimumIndex = (segmentId: number, count: number) => {
-	const step = getSegmentStep(segmentId);
-	const segments = getStepSegmentCount(step);
-	const n = (segmentId + 2) % segments;
-	return Math.ceil(n / segments * count);
-};
+export const getSegmentMinimumIndex = (segmentId: number, count: number): number => (
+	getSegmentDimensions(segmentId, count)[0]
+);
 
 /**
  * Gets the index for the item at the end of this segment.
@@ -226,13 +291,9 @@ export const getSegmentMinimumIndex = (segmentId: number, count: number) => {
  *     getSegmentMaximumIndex(segmentId, count) === 3
  *
  */
-export const getSegmentMaximumIndex = (segmentId: number, count: number) => {
-	const step = getSegmentStep(segmentId);
-	const segments = getStepSegmentCount(step);
-	const n = (segmentId + 3) % segments;
-	const val = Math.ceil(n / segments * count);
-	return val === 0 ? count - 1 : val - 1;
-};
+export const getSegmentMaximumIndex = (segmentId: number, count: number): number => (
+	getSegmentDimensions(segmentId, count)[1]
+);
 
 /**
  * Gets the number of items within this segment.
@@ -255,7 +316,6 @@ export const getSegmentMaximumIndex = (segmentId: number, count: number) => {
  *     getSegmentItemCount(segmentId, count) === 2
  *
  */
-export const getSegmentItemCount = (segmentId: number, count: number) => (
-	getSegmentMaximumIndex(segmentId, count) -
-	getSegmentMinimumIndex(segmentId, count) + 1
+export const getSegmentItemCount = (segmentId: number, count: number): number => (
+	getSegmentDimensions(segmentId, count)[2]
 );
