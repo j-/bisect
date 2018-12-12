@@ -9,6 +9,8 @@ import {
 	getSegmentMaximumIndex,
 	getSegmentDimensions,
 	getPivotIndex,
+	getStepSegment,
+	getStepSegmentCount,
 } from './calculations';
 
 describe('getMinimumSteps()', () => {
@@ -128,13 +130,81 @@ describe('getSegmentStep()', () => {
 	});
 });
 
+describe('getStepSegmentCount()', () => {
+	it('handles step 1', () => {
+		expect(getStepSegmentCount(1)).toBe(2);
+	});
+
+	it('handles step 2', () => {
+		expect(getStepSegmentCount(2)).toBe(4);
+	});
+
+	it('handles step 3', () => {
+		expect(getStepSegmentCount(3)).toBe(8);
+	});
+
+	it('handles step 4', () => {
+		expect(getStepSegmentCount(4)).toBe(16);
+	});
+
+	it('handles step 5', () => {
+		expect(getStepSegmentCount(5)).toBe(32);
+	});
+
+	it('handles step 6', () => {
+		expect(getStepSegmentCount(6)).toBe(64);
+	});
+
+	it('handles step 7', () => {
+		expect(getStepSegmentCount(7)).toBe(128);
+	});
+});
+
+describe('getStepSegment()', () => {
+	it('handles 4 items, step 1', () => {
+		expect(getStepSegment(0, 4, 1)).toBe(0);
+		expect(getStepSegment(1, 4, 1)).toBe(0);
+		expect(getStepSegment(2, 4, 1)).toBe(1);
+		expect(getStepSegment(3, 4, 1)).toBe(1);
+	});
+
+	it('handles 5 items, step 1', () => {
+		expect(getStepSegment(0, 5, 1)).toBe(0);
+		expect(getStepSegment(1, 5, 1)).toBe(0);
+		expect(getStepSegment(2, 5, 1)).toBe(0);
+		expect(getStepSegment(3, 5, 1)).toBe(1);
+		expect(getStepSegment(4, 5, 1)).toBe(1);
+	});
+
+	it('handles 49 items, step 2', () => {
+		expect(getStepSegment(0, 49, 2)).toBe(0);
+		expect(getStepSegment(12, 49, 2)).toBe(0);
+		expect(getStepSegment(13, 49, 2)).toBe(1);
+	});
+
+	it('handles 49 items, step 3', () => {
+		expect(getStepSegment(0, 49, 3)).toBe(0);
+		expect(getStepSegment(6, 49, 3)).toBe(0);
+		expect(getStepSegment(7, 49, 3)).toBe(1);
+	});
+
+	it('handles 49 items, step 6', () => {
+		expect(getStepSegment(0, 49, 6)).toBe(0);
+	});
+});
+
 describe('getSegmentId()', () => {
-	it('handles example scenario', () => {
+	it('handles 49 items, step 4', () => {
 		expect(getSegmentId(24, 49, 4)).toBe(21);
 		expect(getSegmentId(25, 49, 4)).toBe(22);
 		expect(getSegmentId(26, 49, 4)).toBe(22);
 		expect(getSegmentId(27, 49, 4)).toBe(22);
 		expect(getSegmentId(28, 49, 4)).toBe(23);
+	});
+
+	xit('handles 49 items, step 6', () => {
+		expect(getSegmentId(4, 49, 6)).toBe(66);
+		expect(getSegmentId(5, 49, 6)).toBe(67);
 	});
 });
 
@@ -369,5 +439,10 @@ describe('getSegmentDimensions()', () => {
 	it('handles 49 items, step 6', () => {
 		expect(getSegmentDimensions(66, 49)).toEqual([4, 4, 1]);
 		expect(getSegmentDimensions(67, 49)).toEqual([5, 5, 1]);
+	});
+
+	it('handles segments smaller than 1 item', () => {
+		expect(getSegmentDimensions(68, 49)).toEqual([6, 6, 0]);
+		expect(getSegmentDimensions(69, 49)).toEqual([6, 6, 0]);
 	});
 });

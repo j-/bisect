@@ -230,7 +230,7 @@ export const getSegmentDimensions = (segmentId: number | null, count: number): [
 		return [0, count - 1, count];
 	}
 	const parentId = getParentSegmentId(segmentId);
-	const [parentMin, parentMax] = getSegmentDimensions(parentId, count);
+	const [parentMin, parentMax, parentCount] = getSegmentDimensions(parentId, count);
 	const isFirst = (
 		// Segment has no parent if it's in the first step
 		parentId === null ?
@@ -240,9 +240,10 @@ export const getSegmentDimensions = (segmentId: number | null, count: number): [
 			segmentId === 2 * parentId + 2
 	);
 	const indexPivot = getPivotIndex(parentMin, parentMax);
-	const indexMin = isFirst ? parentMin : indexPivot + 1;
 	const indexMax = isFirst ? indexPivot : parentMax;
-	return [indexMin, indexMax, indexMax - indexMin + 1];
+	const indexMin = isFirst ? parentMin : Math.min(indexPivot + 1, indexMax);
+	const segmentCount = parentCount === 1 ? 0 : indexMax - indexMin + 1;
+	return [indexMin, indexMax, segmentCount];
 };
 
 /**
