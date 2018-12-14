@@ -2,8 +2,11 @@ import { Reducer } from 'redux';
 
 import {
 	isActionHoverSegment,
+	ActionHoverSegment,
 	isActionSelectSegment,
+	ActionSelectSegment,
 	isActionSetItems,
+	ActionSetItems,
 } from './actions';
 
 export interface ReducerState {
@@ -16,7 +19,13 @@ const DEFAULT_STATE: ReducerState = {
 	selectedSegmentId: null,
 };
 
-const reducer: Reducer<ReducerState> = (state = DEFAULT_STATE, action) => {
+type ActionType = (
+	ActionHoverSegment |
+	ActionSelectSegment |
+	ActionSetItems
+)
+
+const reducer: Reducer<ReducerState, ActionType> = (state = DEFAULT_STATE, action) => {
 	if (isActionHoverSegment(action)) {
 		const { segmentId } = action.data;
 		return {

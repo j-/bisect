@@ -10,6 +10,7 @@ import {
 
 import {
 	isActionSetItems,
+	ActionSetItems,
 } from './actions';
 
 export interface ReducerState {
@@ -20,7 +21,11 @@ const DEFAULT_STATE: ReducerState = {
 	items: [],
 };
 
-const reducer: Reducer<ReducerState> = (state = DEFAULT_STATE, action) => {
+type ActionType = (
+	ActionSetItems
+)
+
+const reducer: Reducer<ReducerState, ActionType> = (state = DEFAULT_STATE, action) => {
 	if (isActionSetItems(action)) {
 		const { items } = action.data;
 		return {
