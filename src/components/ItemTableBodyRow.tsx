@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getSegmentId } from '../calculations/get-segment-id';
 import { getSegmentDimensions } from '../calculations/get-segment-dimensions';
-import Segment from './Segment';
+import Segment from '../containers/Segment';
 import './ItemTableBodyRow.css';
 
 export interface Props {
