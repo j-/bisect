@@ -70,3 +70,32 @@ export const removeSelectSegment = (): ActionSelectSegment => ({
 		segmentId: null,
 	},
 });
+
+/* Set segment color */
+
+export interface ActionSetSegmentColor extends Action<'SetSegmentColor'> {
+	data: {
+		segmentId: number;
+		color: string | null;
+	};
+}
+
+export const isActionSetSegmentColor = (action: Action): action is ActionSetSegmentColor => (
+	action.type === 'SetSegmentColor'
+);
+
+export const setSegmentColor = (segmentId: number, color: string): ActionSetSegmentColor => ({
+	type: 'SetSegmentColor',
+	data: {
+		segmentId,
+		color,
+	},
+});
+
+export const clearSegmentColor = (segmentId: number): ActionSetSegmentColor => ({
+	type: 'SetSegmentColor',
+	data: {
+		segmentId,
+		color: null,
+	},
+});

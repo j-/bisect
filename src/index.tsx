@@ -7,7 +7,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import App from './components/App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import { setItems } from './store/actions';
+import { setItems, setSegmentColor } from './store/actions';
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -21,6 +21,14 @@ store.dispatch(
 		'Indigo',
 		'Violet',
 	])
+);
+
+store.dispatch(
+	setSegmentColor(0, 'hsl(100, 80%, 70%)')
+);
+
+store.dispatch(
+	setSegmentColor(1, 'hsl(0, 80%, 70%)')
 );
 
 ReactDOM.render(

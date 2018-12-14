@@ -6,6 +6,7 @@ export interface Props {
 	segmentId: number;
 	isHovered: boolean;
 	isSelected: boolean;
+	color: string | null;
 	onMouseOver: () => void;
 	onMouseOut: () => void;
 	onClick: () => void;
@@ -15,6 +16,7 @@ const Segment: React.FunctionComponent<Props> = ({
 	segmentId,
 	isHovered,
 	isSelected,
+	color,
 	onMouseOver,
 	onMouseOut,
 	onClick,
@@ -24,12 +26,13 @@ const Segment: React.FunctionComponent<Props> = ({
 			'Segment--hovered': isHovered,
 			'Segment--selected': isSelected,
 		})}
+		style={{
+			backgroundColor: color || 'transparent',
+		}}
 		onMouseOver={onMouseOver}
 		onMouseOut={onMouseOut}
 		onClick={onClick}
-	>
-		{segmentId}
-	</div>
+	/>
 );
 
 export default Segment;

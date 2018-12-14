@@ -1,15 +1,18 @@
 import { combineReducers } from 'redux';
 import * as items from './reducer-items';
 import * as segments from './reducer-segments';
+import * as segmentsMeta from './reducer-segments-meta';
 
 export interface RootReducerState {
 	items: items.ReducerState;
 	segments: segments.ReducerState;
+	segmentsMeta: segmentsMeta.ReducerState;
 }
 
 export default combineReducers<RootReducerState>({
 	items: items.default,
 	segments: segments.default,
+	segmentsMeta: segmentsMeta.default,
 });
 
 export const getItems = (state: RootReducerState) => (
@@ -50,4 +53,8 @@ export const getSelectedSegmentId = (state: RootReducerState) => (
 
 export const isSegmentSelected = (state: RootReducerState, segmentId: number) => (
 	segments.isSegmentSelected(state.segments, segmentId)
+);
+
+export const getSegmentColor = (state: RootReducerState, segmentId: number) => (
+	segmentsMeta.getSegmentColor(state.segmentsMeta, segmentId)
 );

@@ -4,10 +4,11 @@
 	height: 100%;
 	padding: 0.25em;
 	cursor: pointer;
+	box-shadow: inset 0 0 0 2px #fff;
 }
 
 .Segment--hovered {
-	background-color: #eee;
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
 }
 
 .Segment--selected {
