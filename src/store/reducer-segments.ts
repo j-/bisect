@@ -1,7 +1,9 @@
 import { Reducer } from 'redux';
 
 import {
-	isActionHoverSegment, isActionSelectSegment,
+	isActionHoverSegment,
+	isActionSelectSegment,
+	isActionSetItems,
 } from './actions';
 
 export interface ReducerState {
@@ -28,6 +30,14 @@ const reducer: Reducer<ReducerState> = (state = DEFAULT_STATE, action) => {
 		return {
 			...state,
 			selectedSegmentId: segmentId,
+		};
+	}
+
+	if (isActionSetItems(action)) {
+		return {
+			...state,
+			hoveredSegmentId: null,
+			selectedSegmentId: null,
 		};
 	}
 
