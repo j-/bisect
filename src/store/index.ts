@@ -35,3 +35,7 @@ export const isAnySegmentHovered = (state: RootReducerState) => (
 export const getHoveredSegmentId = (state: RootReducerState) => (
 	segments.getHoveredSegmentId(state.segments)
 );
+
+export const isSegmentHovered = (state: RootReducerState, segmentId: number) => (
+	segments.isSegmentHovered(state.segments, segmentId)
+);
