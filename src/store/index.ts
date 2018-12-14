@@ -1,51 +1,37 @@
-import { Reducer } from 'redux';
-
-import {
-	getMinimumSteps as calculateMinimumSteps,
-} from '../calculations/get-minimum-steps';
-
-import {
-	getMaximumSteps as calculateMaximumSteps,
-} from '../calculations/get-maximum-steps';
-
-import {
-	isActionSetItems,
-} from './actions';
+import { combineReducers } from 'redux';
+import * as items from './reducer-items';
+import * as segments from './reducer-segments';
 
 export interface RootReducerState {
-	items: string[];
+	items: items.ReducerState;
+	segments: segments.ReducerState;
 }
 
-const DEFAULT_STATE: RootReducerState = {
-	items: [],
-};
-
-const reducer: Reducer<RootReducerState> = (state = DEFAULT_STATE, action) => {
-	if (isActionSetItems(action)) {
-		const { items } = action.data;
-		return {
-			...state,
-			items,
-		};
-	}
-
-	return state;
-};
-
-export default reducer;
+export default combineReducers<RootReducerState>({
+	items: items.default,
+	segments: segments.default,
+});
 
 export const getItems = (state: RootReducerState) => (
-	state.items
+	items.getItems(state.items)
 );
 
 export const countItems = (state: RootReducerState) => (
-	getItems(state).length
+	items.countItems(state.items)
 );
 
 export const getMinimumSteps = (state: RootReducerState) => (
-	calculateMinimumSteps(countItems(state))
+	items.getMinimumSteps(state.items)
 );
 
 export const getMaximumSteps = (state: RootReducerState) => (
-	calculateMaximumSteps(countItems(state))
+	items.getMaximumSteps(state.items)
+);
+
+export const isAnySegmentHovered = (state: RootReducerState) => (
+	segments.isAnySegmentHovered(state.segments)
+);
+
+export const getHoveredSegmentId = (state: RootReducerState) => (
+	segments.getHoveredSegmentId(state.segments)
 );

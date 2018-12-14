@@ -18,3 +18,29 @@ export const setItems = (items: string[]): ActionSetItems => ({
 		items,
 	},
 });
+
+/* Hover segment */
+
+export interface ActionHoverSegment extends Action<'HoverSegment'> {
+	data: {
+		segmentId: number | null;
+	};
+}
+
+export const isActionHoverSegment = (action: Action): action is ActionHoverSegment => (
+	action.type === 'HoverSegment'
+);
+
+export const hoverSegment = (segmentId: number): ActionHoverSegment => ({
+	type: 'HoverSegment',
+	data: {
+		segmentId,
+	},
+});
+
+export const removeHoverSegment = (): ActionHoverSegment => ({
+	type: 'HoverSegment',
+	data: {
+		segmentId: null,
+	},
+});
