@@ -44,3 +44,29 @@ export const removeHoverSegment = (): ActionHoverSegment => ({
 		segmentId: null,
 	},
 });
+
+/* Select segment */
+
+export interface ActionSelectSegment extends Action<'SelectSegment'> {
+	data: {
+		segmentId: number | null;
+	};
+}
+
+export const isActionSelectSegment = (action: Action): action is ActionSelectSegment => (
+	action.type === 'SelectSegment'
+);
+
+export const selectSegment = (segmentId: number): ActionSelectSegment => ({
+	type: 'SelectSegment',
+	data: {
+		segmentId,
+	},
+});
+
+export const removeSelectSegment = (): ActionSelectSegment => ({
+	type: 'SelectSegment',
+	data: {
+		segmentId: null,
+	},
+});

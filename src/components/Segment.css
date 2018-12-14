@@ -9,3 +9,7 @@
 .Segment--hovered {
 	background-color: #eee;
 }
+
+.Segment--selected {
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.75);
+}

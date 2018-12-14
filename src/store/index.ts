@@ -39,3 +39,15 @@ export const getHoveredSegmentId = (state: RootReducerState) => (
 export const isSegmentHovered = (state: RootReducerState, segmentId: number) => (
 	segments.isSegmentHovered(state.segments, segmentId)
 );
+
+export const isAnySegmentSelected = (state: RootReducerState) => (
+	segments.isAnySegmentSelected(state.segments)
+);
+
+export const getSelectedSegmentId = (state: RootReducerState) => (
+	segments.getSelectedSegmentId(state.segments)
+);
+
+export const isSegmentSelected = (state: RootReducerState, segmentId: number) => (
+	segments.isSegmentSelected(state.segments, segmentId)
+);
