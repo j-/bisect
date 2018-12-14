@@ -5,5 +5,8 @@
 .ItemTable td,
 .ItemTable th {
 	border: 1px solid #ccc;
+}
+
+.ItemTable th {
 	padding: 0.25em;
 }

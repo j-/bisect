@@ -1,0 +1,14 @@
+.ItemTableBodyRow-item-cell {
+	padding: 0.25em;
+}
+
+.ItemTableBodyRow-segment-cell {
+	position: relative;
+	vertical-align: top;
+	padding: 0;
+}
+
+.ItemTableBodyRow-segment-cell > .Segment {
+	position: absolute;
+	box-sizing: border-box;
+}

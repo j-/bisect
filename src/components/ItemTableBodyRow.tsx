@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { getSegmentId } from '../calculations/get-segment-id';
 import { getSegmentDimensions } from '../calculations/get-segment-dimensions';
+import Segment from './Segment';
+import './ItemTableBodyRow.css';
 
 export interface Props {
 	item: string;
@@ -22,8 +24,8 @@ const buildSegments = (index: number, count: number, steps: number) => {
 			continue;
 		}
 		children.push(
-			<td key={step} rowSpan={itemsInSegment}>
-				{segmentId}
+			<td key={step} rowSpan={itemsInSegment} className="ItemTableBodyRow-segment-cell">
+				<Segment segmentId={segmentId} />
 			</td>
 		);
 	}
@@ -38,7 +40,7 @@ const ItemTableBodyRow: React.FunctionComponent<Props> = ({
 	steps,
 }) => (
 	<tr className="ItemTableBodyRow">
-		<td>{item}</td>
+		<td className="ItemTableBodyRow-item-cell">{item}</td>
 		{buildSegments(index, count, steps)}
 	</tr>
 );
