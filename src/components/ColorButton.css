@@ -1,0 +1,10 @@
+.ColorButton {
+	appearance: none;
+	display: inline-block;
+	width: 2em;
+	height: 2em;
+	border: none;
+	border-radius: 0.25em;
+	background-color: transparent;
+	cursor: pointer;
+}

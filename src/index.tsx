@@ -1,15 +1,20 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './store';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import { Provider as StoreProvider } from 'react-redux';
 import App from './components/App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { setItems, setSegmentColor } from './store/actions';
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer, composeWithDevTools(
+	applyMiddleware(
+		thunk,
+	),
+));
 
 store.dispatch(
 	setItems([

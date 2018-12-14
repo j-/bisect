@@ -1,4 +1,6 @@
-import { Action } from 'redux';
+import { Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootReducerState, getSelectedSegmentId } from './index';
 
 /* Set items */
 
@@ -99,3 +101,20 @@ export const clearSegmentColor = (segmentId: number): ActionSetSegmentColor => (
 		color: null,
 	},
 });
+
+/* Thunks */
+
+type SetCurrentSegmentColor = ActionCreator<ThunkAction<void, RootReducerState, void, ActionSetSegmentColor>>
+
+export const setCurrentSegmentColor: SetCurrentSegmentColor = (color: string) => (
+	(dispatch, getState) => {
+		const state = getState();
+		const segmentId = getSelectedSegmentId(state);
+		if (segmentId === null) {
+			return;
+		}
+		dispatch<ActionSetSegmentColor>(
+			setSegmentColor(segmentId, color)
+		);
+	}
+);
